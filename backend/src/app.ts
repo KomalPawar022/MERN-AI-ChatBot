@@ -11,5 +11,8 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/v1", appRouter);
+app.use("/api", (req, res) => {
+  res.status(200).json({ message: "Hello World" });
+});
 
 export default app;
