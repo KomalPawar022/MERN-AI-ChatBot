@@ -5,7 +5,10 @@ const PORT = process.env.PORT || 5000;
 connectToDatabase()
   .then(() => {
     app.listen(PORT, () =>
-      console.log("Server Open And Connected to the Database"),
+      console.log("Server Open & Connected To Database 🤟"),
     );
   })
-  .catch((e) => console.log(e));
+  .catch((err) => console.log(err));
+
+//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
+//org-DbIeAtRxnnlBCXEqr14IsJ9u

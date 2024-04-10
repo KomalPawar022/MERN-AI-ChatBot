@@ -1,21 +1,20 @@
 import { connect, disconnect } from "mongoose";
 async function connectToDatabase() {
   try {
-    await connect(
-      `mongodb+srv://komalpawar022:Mylo@12345@Cluster0.bfvs5rb.mongodb.net/chatbot?retryWrites=true&w=majority&appName=Cluster0`,
-    );
-  } catch (e) {
-    console.log(e);
-    throw new Error("Cannot connect to MongoDB");
+    await connect(process.env.MONGODB_URL);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Could not Connect To MongoDB");
   }
 }
 
 async function disconnectFromDatabase() {
   try {
     await disconnect();
-  } catch (e) {
-    console.log(e);
-    throw new Error("Cannot Disconnect to MongoDB");
+  } catch (error) {
+    console.log(error);
+    throw new Error("Could not Disconnect From MongoDB");
   }
 }
+
 export { connectToDatabase, disconnectFromDatabase };
