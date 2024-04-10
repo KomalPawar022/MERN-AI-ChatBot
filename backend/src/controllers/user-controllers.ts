@@ -1,6 +1,11 @@
 import User from "../models/User.js";
+import { NextFunction, Request, Response } from "express";
 import { hash } from "bcrypt";
-export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const users = await User.find();
     return res.status(200).json({ message: "OK", users: users });
@@ -10,11 +15,17 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-export const userSignUp = async (req, res, next) => {
+export const userSignUp = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { name, email, password } = req.body;
-    const user = new User({ name, email, password });
-    return res.status(200).json({ message: "OK", id: user._id.toString() });
+    const hashedpassword = await hash(password, 10);
+    const user = new User({ name, email, password: hashedpassword });
+    await user.save();
+    return res.status(201).json({ message: "OK", id: user._id.toString() });
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: "ERROR", cause: e.message });
